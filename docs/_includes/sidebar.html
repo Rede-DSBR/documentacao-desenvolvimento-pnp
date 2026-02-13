@@ -1,0 +1,81 @@
+<aside class="sidebar" id="sidebar">
+  <nav>
+    <ul class="sidebar-nav">
+      {% assign current_url = page.url | replace: ".html", "" %}
+
+      {% for item in site.data.menu.itens %}
+        {% if item.children %}
+
+          {% comment %} Check if any descendant is active {% endcomment %}
+          {% assign l1_active = false %}
+          {% for child in item.children %}
+            {% if child.href == current_url %}
+              {% assign l1_active = true %}
+            {% endif %}
+            {% if child.children %}
+              {% for grandchild in child.children %}
+                {% if grandchild.href == current_url %}
+                  {% assign l1_active = true %}
+                {% endif %}
+              {% endfor %}
+            {% endif %}
+          {% endfor %}
+
+          <li class="nav-folder {% if l1_active %}open active{% endif %}">
+            <button class="nav-folder-toggle">
+              {% if item.icon %}<span class="nav-icon"><i class="{{ item.icon }}"></i></span>{% endif %}
+              <span>{{ item.title }}</span>
+              <span class="chevron"><i class="fas fa-chevron-right"></i></span>
+            </button>
+            <ul class="nav-children">
+              {% for child in item.children %}
+                {% if child.children %}
+
+                  {% assign l2_active = false %}
+                  {% for grandchild in child.children %}
+                    {% if grandchild.href == current_url %}
+                      {% assign l2_active = true %}
+                    {% endif %}
+                  {% endfor %}
+
+                  <li class="nav-folder nav-subfolder {% if l2_active %}open active{% endif %}">
+                    <button class="nav-folder-toggle">
+                      {% if child.icon %}<span class="nav-icon"><i class="{{ child.icon }}"></i></span>{% endif %}
+                      <span>{{ child.title }}</span>
+                      <span class="chevron"><i class="fas fa-chevron-right"></i></span>
+                    </button>
+                    <ul class="nav-children">
+                      {% for grandchild in child.children %}
+                        <li class="nav-item">
+                          <a href="{{ grandchild.href | relative_url }}" {% if grandchild.href == current_url %}class="active"{% endif %}>
+                            {{ grandchild.title }}
+                          </a>
+                        </li>
+                      {% endfor %}
+                    </ul>
+                  </li>
+
+                {% else %}
+                  <li class="nav-item">
+                    <a href="{{ child.href | relative_url }}" {% if child.href == current_url %}class="active"{% endif %}>
+                      {% if child.icon %}<span class="nav-icon"><i class="{{ child.icon }}"></i></span>{% endif %}
+                      {{ child.title }}
+                    </a>
+                  </li>
+                {% endif %}
+              {% endfor %}
+            </ul>
+          </li>
+
+        {% else %}
+          <li class="nav-item">
+            <a href="{{ item.href | relative_url }}" {% if item.href == current_url %}class="active"{% endif %}>
+              {% if item.icon %}<span class="nav-icon"><i class="{{ item.icon }}"></i></span>{% endif %}
+              {{ item.title }}
+            </a>
+          </li>
+        {% endif %}
+      {% endfor %}
+    </ul>
+  </nav>
+</aside>

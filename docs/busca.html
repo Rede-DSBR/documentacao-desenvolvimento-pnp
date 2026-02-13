@@ -1,0 +1,28 @@
+---
+layout: default
+title: "Busca"
+---
+
+{% if site.search_engine == "lunrjs" %}
+<h1>Resultados da busca</h1>
+<div id="lunrsearchresults"></div>
+
+{% include search_lunr.html %}
+<script>
+  function getQueryParam(name) {
+    var params = new URLSearchParams(window.location.search);
+    return params.get(name) || "";
+  }
+
+  function escapeHTML(str) {
+    var div = document.createElement("div");
+    div.appendChild(document.createTextNode(str));
+    return div.innerHTML;
+  }
+
+  var query = escapeHTML(getQueryParam("q"));
+  if (query) {
+    lunr_search(query);
+  }
+</script>
+{% endif %}

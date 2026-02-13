@@ -1,0 +1,18 @@
+<header class="site-header">
+  <div class="header-inner">
+    <button class="menu-toggle" id="menu-toggle" aria-label="Abrir menu">
+      <i class="fas fa-bars"></i>
+    </button>
+    <a href="{{ '/' | relative_url }}" class="header-brand">
+      {{ site.title }}
+    </a>
+    {% if site.search_engine == "lunrjs" %}
+    <div class="header-search">
+      <span class="search-icon"><i class="fas fa-search"></i></span>
+      <form action="{{ '/busca' | relative_url }}" method="get">
+        <input type="text" name="q" placeholder="Buscar na documentacao..." autocomplete="off" maxlength="60" />
+      </form>
+    </div>
+    {% endif %}
+  </div>
+</header>

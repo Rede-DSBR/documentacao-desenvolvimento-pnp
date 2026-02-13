@@ -1,0 +1,9 @@
+url: ""
+baseurl: ""
+
+title: "Documentação de Desenvolvimento PNP"
+subtitle: "Plataforma Nilo Peçanha"
+footer: "Documentação elaborada pela Rede DSBR."
+search_engine: "lunrjs"
+
+plugins: []

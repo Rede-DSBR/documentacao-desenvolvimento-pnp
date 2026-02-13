@@ -1,0 +1,44 @@
+{% assign navigable_items = "" | split: "" %}
+{% for item in site.data.menu.itens %}
+  {% include flatten_menu_item.html item=item %}
+{% endfor %}
+
+{% assign current_url = page.url | replace: ".html", "" %}
+{% assign current_index = -1 %}
+{% for item in navigable_items %}
+  {% if item.href == current_url %}
+    {% assign current_index = forloop.index0 %}
+    {% break %}
+  {% endif %}
+{% endfor %}
+
+<nav class="pagination">
+  {% if current_index > 0 %}
+    {% assign prev_index = current_index | minus: 1 %}
+    {% assign prev_item = navigable_items[prev_index] %}
+    <a href="{{ prev_item.href | relative_url }}" class="pagination-link prev">
+      <span class="label"><i class="fas fa-arrow-left"></i> Anterior</span>
+      <span class="title">{{ prev_item.title }}</span>
+    </a>
+  {% else %}
+    <span class="pagination-link prev disabled">
+      <span class="label"><i class="fas fa-arrow-left"></i> Anterior</span>
+      <span class="title">---</span>
+    </span>
+  {% endif %}
+
+  {% assign last_index = navigable_items.size | minus: 1 %}
+  {% if current_index != -1 and current_index < last_index %}
+    {% assign next_index = current_index | plus: 1 %}
+    {% assign next_item = navigable_items[next_index] %}
+    <a href="{{ next_item.href | relative_url }}" class="pagination-link next">
+      <span class="label">Proximo <i class="fas fa-arrow-right"></i></span>
+      <span class="title">{{ next_item.title }}</span>
+    </a>
+  {% else %}
+    <span class="pagination-link next disabled">
+      <span class="label">Proximo <i class="fas fa-arrow-right"></i></span>
+      <span class="title">---</span>
+    </span>
+  {% endif %}
+</nav>
