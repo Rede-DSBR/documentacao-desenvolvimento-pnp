@@ -1,5 +1,5 @@
-url: ""
-baseurl: ""
+url: "https://rede-dsbr.github.io"
+baseurl: "/documentacao-desenvolvimento-pnp"
 
 title: "Documentação de Desenvolvimento PNP"
 subtitle: "Plataforma Nilo Peçanha"
